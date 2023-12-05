@@ -8,7 +8,9 @@
       Examples:
       |login |password|
       |"t"   |"t"     |
-      |"user"|"qwerty"|
+      |"user"|"qwe rty"|
+
+      # TODO дописать негативных сценариев
 
     @fail
     Scenario Outline: Ошибка при регистрации с уже существующим именем пользователя
@@ -18,3 +20,12 @@
       Examples:
       |login|password|error_message|
       |"t"    |"t"       |"Пользователь с таким именем уже существует!"|
+
+#    @fail
+#    Scenario Outline: Ошибка при регистрации из-за пустого поля пароля
+#      Given Пользователь регистрируется под логином <login> и оставляет пустым поле <password>
+#      When Пользователь нажимает кнопку регистрации
+#      Then Система выдаёт пользователю сообщение об ошибке <error_message>
+#      Examples:
+#      |login|password|error_message|
+#      |"t"  |""      |"Пустой пароль"|
