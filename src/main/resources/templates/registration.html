@@ -19,22 +19,26 @@
                  <table>
                      <tr>
                          <td><label>Логин:</label></td>
-                         <td><input type="text" th:field="*{username}"/></td>
-                         <td><span class="validationError" th:text="${usernameError}"></span></td>
+                         <td><input name="username" type="text" th:field="*{username}"/></td>
+                         <td><span class="validationError" th:text="${usernameError}">Login Error
+                         </span></td>
                      </tr>
                      <tr>
                          <td><label>Пароль:</label></td>
-                         <td><input type="password" th:field="*{password}"/></td>
+                         <td><input name="password" type="password" th:field="*{password}"/></td>
                          <td></td>
+                     </tr>
+                     <tr>
+                     	 <td><label>Email:</label></td>
+                     	 <td><input name="email" type="text" th:field="*{email}"/></td>
+                     	 <td><span class="validationError" th:if="${#fields.hasErrors('email')}"
+                     	 th:errors="*{email}">Email Error</span></td>
                      </tr>
                  </table>
                  <div class="form-center">
-                     <input type="submit" value="Готово"/>
+                     <input type="submit" id="enter_submit" value="Готово"/>
                  </div>
              </form>             
-         </div>
-         <div class="form-center">
-             <a th:href="@{/registration}">Зарегистрироваться</a>
          </div>
       </div>
    </main>

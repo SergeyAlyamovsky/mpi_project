@@ -10,12 +10,14 @@
       <div class="container">
           <div class="container-sb">
               <div>
-                  <h1>Кинокаталог</h1>
+                  <h1 id='catalog-page-title'>Кинокаталог</h1>
               </div>
               <div>
-              	  <span th:text="${currentUser != 'anonymousUser'} ? ${currentUser} : 'Гость'">Гость</span>
-                  <h4><a href="/authorization">Войти</a></h4>
-              </div>
+              	  <h4 id="username" th:text="${currentUser != 'anonymousUser'} ? ${currentUser} : 'Гость'">Гость</h4>
+                  <h4><a id="authorization" href="/authorization">Войти</a></h4>
+                  <h4><a id="profile" href="/profile">Профиль</a></h4>
+                  <h4><a id="logout" href="/logout">Выйти</a></h4>
+			  </div>
           </div>
       </div>
    </header>
@@ -24,7 +26,8 @@
          <p style="font-size:25px">Каталог</p>
          <form th:each="film:${films}" action="#" th:action="@{/catalog}" method="post">
              <input name="id" type="hidden" th:value="${film.getId()}"/>
-             <input type="image" th:src="@{${film.getImage()}}" alt="${film.getEnglishTitle()}" width="200" height="300"/>
+             <input type="image" th:src="@{${film.getImage()}}"
+             th:id="${film.getEnglishTitle()}" th:alt="${film.getEnglishTitle()}" width="200" height="300"/>
          </form>
       </div>
    </main>

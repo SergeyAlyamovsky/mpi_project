@@ -10,12 +10,31 @@
       <div class="container">
          <h1>Кинокаталог</h1>
       </div>
+      <div>
+         <h4><a id="authorization" href="/authorization">Войти</a></h4>
+         <h4><a id="profile" href="/profile">Профиль</a></h4>
+         <h4><a id="logout" href="/logout">Выйти</a></h4>
+	  </div>
    </header>
    <main>
       <div class="container">
          <p style="font-size:25px" th:text="${selectedFilm.getTitle()}"/>
          <img th:src="@{${selectedFilm.getImage()}}" width="200" height="300" align="top"/>
          <table>
+         	 <tr>
+                 <td>
+                 <form action="#" th:action="@{/addBookmark}" method="post">
+             	 	<input name="id" type="hidden" th:value="${selectedFilm.getId()}"/>
+             	 	<input id="add_bookmark_submit" type="submit" value="В закладки"/>
+         		 </form>
+                 </td>
+                 <td>
+                 <form action="#" th:action="@{/removeBookmark}" method="post">
+             	 	<input name="id" type="hidden" th:value="${selectedFilm.getId()}"/>
+             	 	<input id="remove_bookmark_submit" type="submit" value="Убрать из закладок"/>
+         		 </form>
+                 </td>
+             </tr>
              <tr>
                  <td>Год:</td>
                  <td th:text="${selectedFilm.getReleaseYear()}"/>

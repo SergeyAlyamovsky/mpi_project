@@ -1,12 +1,19 @@
 package cinema.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Film")
@@ -26,10 +33,19 @@ public class Film implements Serializable {
 	private String description;
 	private String image;
 	
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+			},
+			mappedBy = "films")
+	@JsonIgnore
+	private Set<User> users = new HashSet<User>();
+	
 	public Film() {
 	}
 	
-	public Film(int id, String englishTitle, String title, int releaseYear, String genre, 
+	public Film(int id, String englishTitle, String title, int releaseYear, String genre,
 			String director, int time, String ageRating, String description,
 			String image) {
 		this.id = id;
@@ -103,5 +119,12 @@ public class Film implements Serializable {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public Set<User> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 }
