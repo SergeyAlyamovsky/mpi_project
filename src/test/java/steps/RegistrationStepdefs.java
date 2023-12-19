@@ -38,10 +38,11 @@ public class RegistrationStepdefs {
         waitFirefox.until(ExpectedConditions.titleIs("Registration"));
     }
 
-    @When("Пользователь регистрируется под логином {string} и паролем {string}")
-    public void userRegisteredWithLoginAndPassword(String login, String password) {
+    @When("Пользователь регистрируется под логином {string} и паролем {string} и почтой {string}")
+    public void userRegisteredWithLoginAndPassword(String login, String password, String email) {
         driverFirefox.findElement(By.ByName.name("username")).sendKeys(login);
         driverFirefox.findElement(By.ByName.name("password")).sendKeys(password);
+        driverFirefox.findElement(By.ByName.name("email")).sendKeys(email);
         driverFirefox.findElement(By.ById.id("registration_submit")).click();
     }
 
@@ -65,7 +66,44 @@ public class RegistrationStepdefs {
 
     @Then("Система выдаёт пользователю сообщение об ошибке {string}")
     public void showRegistrationErrorMessageToUser(String errorMessage) {
-        driverFirefox.findElement(By.ByClassName.className("validationError")).getText().equals(errorMessage);
+        boolean result = driverFirefox.findElement(By.ByClassName.className("validationError")).getText().equals(errorMessage);
         driverFirefox.quit();
+    }
+
+    @Given("Пользователь регистрируется под логином {string} и оставляет пустым поле {string}")
+    public void userRegisteredWithLoginAndEmptyPassword(String login, String password) {
+        resetDriverAndDriverWait();
+        setWebDriverLocationProperty();
+
+        driverFirefox.navigate().to(SITE);
+        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT_SECONDS));
+        waitFirefox.until(ExpectedConditions.titleIs("Authorization"));
+        driverFirefox.findElement(By.ById.id("registration_link")).click();
+        waitFirefox.until(ExpectedConditions.titleIs("Registration"));
+
+        driverFirefox.findElement(By.ByName.name("username")).sendKeys(login);
+        driverFirefox.findElement(By.ByName.name("password")).sendKeys(password);
+        driverFirefox.findElement(By.ById.id("registration_submit")).click();
+    }
+
+    @When("Пользователь нажимает кнопку регистрации")
+    public void userRegistered() {
+        driverFirefox.findElement(By.ById.id("registration_submit")).click();
+    }
+
+    @Given("Пользователь регистрируется под логином {string} и паролем {string} и неправильной почтой {string}")
+    public void userRegisteredWithLoginPasswordAndWrongEmail(String login, String password, String email) {
+        resetDriverAndDriverWait();
+        setWebDriverLocationProperty();
+
+        driverFirefox.navigate().to(SITE);
+        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT_SECONDS));
+        waitFirefox.until(ExpectedConditions.titleIs("Authorization"));
+        driverFirefox.findElement(By.ById.id("registration_link")).click();
+        waitFirefox.until(ExpectedConditions.titleIs("Registration"));
+
+        driverFirefox.findElement(By.ByName.name("username")).sendKeys(login);
+        driverFirefox.findElement(By.ByName.name("password")).sendKeys(password);
+        driverFirefox.findElement(By.ByName.name("email")).sendKeys(email);
     }
 }

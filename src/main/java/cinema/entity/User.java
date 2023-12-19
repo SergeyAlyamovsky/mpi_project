@@ -29,8 +29,11 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+
+	@NotBlank(message = "Логин не должен быть пустым!")
 	private String username;
+
+	@NotBlank(message = "Пароль не должен быть пустым!")
 	private String password;
 	
 	@NotBlank(message = "Требуется почта!")

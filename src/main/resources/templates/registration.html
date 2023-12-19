@@ -20,13 +20,17 @@
                      <tr>
                          <td><label>Логин:</label></td>
                          <td><input name="username" type="text" th:field="*{username}"/></td>
-                         <td><span class="validationError" th:text="${usernameError}">Login Error
-                         </span></td>
+                         <td>
+                             <span class="validationError" th:text="${usernameError}">Login Error</span>
+                             <span class="validationError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                         </td>
                      </tr>
                      <tr>
                          <td><label>Пароль:</label></td>
                          <td><input name="password" type="password" th:field="*{password}"/></td>
-                         <td></td>
+                         <td>
+                             <span class="validationError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                         </td>
                      </tr>
                      <tr>
                      	 <td><label>Email:</label></td>
