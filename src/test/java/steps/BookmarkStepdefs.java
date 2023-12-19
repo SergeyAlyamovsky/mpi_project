@@ -2,35 +2,19 @@ package steps;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import cucumber.api.java.ru.Дано;
 import cucumber.api.java.ru.Когда;
 import cucumber.api.java.ru.Тогда;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.assertEquals;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class BookmarkStepdefs {
     private FirefoxDriver driverFirefox;
-
-    private static void setWebDriverLocationProperty() {
-        System.setProperty("webdriver.gecko.driver", "C:/firefoxdriver/geckodriver.exe");
-    }
-
-    private void resetDriver() {
-        driverFirefox = new FirefoxDriver();
-        driverFirefox.manage().window().maximize();
-        driverFirefox.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
     
  	public void signup(String username, String password, String email) {
  		driverFirefox.get("http://localhost:8080/registration");
@@ -57,17 +41,17 @@ public class BookmarkStepdefs {
  	
  	@Before
 	public void prepare() {
- 		resetDriver();
-        setWebDriverLocationProperty();
+ 		System.setProperty("webdriver.gecko.driver", "C:/geckodriver/geckodriver.exe");
+ 		
+ 		driverFirefox = new FirefoxDriver();
+        driverFirefox.manage().window().maximize();
+        driverFirefox.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         
         signup("user1", "123", "user1@mail.ru");
         login("user1", "123");
-        
-		logout();
-		driverFirefox.quit();
 	}
     
-    @Дано("Авторизованный пользователь находится на странице с фильмом")
+    @Дано("Пользователь находится на странице с фильмом")
     public void userOnFilmPage() {		
 		driverFirefox.get("http://localhost:8080/catalog");
     }
